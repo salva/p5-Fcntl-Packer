@@ -7,8 +7,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#define MATH_INT64_NATIVE_IF_AVAILABLE 1
+#if(IVSIZE < 8)
 #include "perl_math_int64.h"
+#else
+#define SvI64 SvIV
+#define newSVi64 newSViv
+#endif
 
 SV *get(pTHX_ HV *hv, char *name, STRLEN len) {
   SV **svp = hv_fetch(hv, name, len, 0);
@@ -37,7 +41,11 @@ SV *get(pTHX_ HV *hv, char *name, STRLEN len) {
 MODULE = Fcntl::Packer		PACKAGE = Fcntl::Packer		
 
 BOOT:
+#if (IVSIZE < 8)
   PERL_MATH_INT64_LOAD_OR_CROAK;
+#else
+  ;
+#endif
 
 SV *
 pack_fcntl_flock(HV *hv)

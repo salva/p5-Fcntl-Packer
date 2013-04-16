@@ -2,9 +2,12 @@ use ExtUtils::MakeMaker;
 
 use Config;
 
+my $object = '';
 my %prereq;
+
 if ($Config::Config{ivsize} < 8) {
     $prereq{'Math::Int64'} = '0.28';
+    $object = 'perl_math_int64.$(OBJ_EXT)';
 }
 
 WriteMakefile( NAME              => 'Fcntl::Packer',
@@ -15,4 +18,4 @@ WriteMakefile( NAME              => 'Fcntl::Packer',
                LIBS              => [''],
                DEFINE            => '',
                INC               => '-I.',
-               OBJECT            => '$(O_FILES)' );
+               OBJECT            => $object );
