@@ -6,3 +6,6 @@ ppport.h
 README
 t/Fcntl-Packer.t
 lib/Fcntl/Packer.pm
+t/pods.t
+perl_math_int64.c
+perl_math_int64.h
